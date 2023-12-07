@@ -14,7 +14,8 @@ session_start();
 // Comprobamos si la variable existe
 if (!isset($_SESSION['stock'])){
   $_SESSION['stock']=0;
-}
+  $_SESSION['cart'] = array();
+} 
 
 
 ?>
@@ -46,7 +47,7 @@ input {
 </head>
 <body>
   <h2>Tienda</h2>
-  <h3>Carrito: <?=$_SESSION['stock']?></h3>
+  <a href="cart.php">Ver Carrito</a>
 
     <table>
     <tr>
@@ -94,9 +95,16 @@ function orderBy($sort){
    <td id = "<?=$id?>"><?=$name?></td>
    <td id = "<?=$id?>"><?=$price?></td>
    <td id = "<?=$id?>"><?=$amount?></td>
-   <!-- No funciona el carrito -->
-   <td><input type="button" name="add_cart_button" value="&#128722;" onclick="location.href='addCart.php'"></td> 
+   
+    <form method="post" action="">
+      <input type="hidden" name="product_id" value="<?=$id?>">
+      <td>
+      <button type="submit" name="add_cart_button">&#128722;</button>
+      </td>
+    </form>
+   
    <!-- <a href="prueba.php"><span style='font-size:20px;'>&#128722;</span></a> -->
+   <!-- <input type="submit" name="add_cart_button" value="&#128722;"> -->
  <?php
    $field = $result->fetch_assoc();
    ?>
@@ -107,9 +115,31 @@ function orderBy($sort){
 
 }
 
-function addCart() {
-  $_SESSION['stock']++;
+if (isset($_POST['add_cart_button'])) {
+  // Llama a la función cuando se pulsa el botón
+   addCart($_POST['product_id']);
+}
 
+function addCart($product_id) {
+  $_SESSION['stock']++;
+  if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+}
+
+// Aumenta la cantidad del producto en el carrito
+if (isset($_SESSION['cart'][$product_id])) {
+  $_SESSION['cart'][$product_id]++;
+
+} else {
+  $_SESSION['cart'][$product_id] = 1;
+
+}
+}
+
+
+
+if(isset($_SESSION["cart"])){
+print_r($_SESSION["cart"]);
 }
 
 ?> 
