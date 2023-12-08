@@ -25,29 +25,13 @@ if (!isset($_SESSION['stock'])){
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tienda</title>
-  <style>
-   table, td, th {
-  border: 1px solid;
-}
-
-th {
-  background-color: lightblue;
-}
-
-table {
-  width: 70%;
-  border-collapse: collapse;
-}
-/* 
-input {
-  border: none;
-  background: none;
-} */
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h2>Tienda</h2>
   <a href="cart.php">Ver Carrito</a>
+  <a href="logout.php">Cerrar Sesión</a>
+
 
     <table>
     <tr>
@@ -117,8 +101,41 @@ function orderBy($sort){
 
 if (isset($_POST['add_cart_button'])) {
   // Llama a la función cuando se pulsa el botón
-   addCart($_POST['product_id']);
+   subtract($_POST['product_id']);
+
 }
+
+
+
+function subtract($product_id) {
+  require "connection.php";
+  include "top.php";
+
+  //Busco cuanto stock hay de este producto
+  $sql1 = "SELECT amount FROM products WHERE id = $product_id";
+  $result = $link->query($sql1);
+
+  $field = $result->fetch_assoc();
+   $amount = $field['amount']; 
+
+   //si no da error
+  if($result){
+    //y si el stock es mayor de 0
+    if($amount > 0){
+      //resto uno al stock
+      $sql2 = "UPDATE products SET amount = amount -1 WHERE id=$product_id";
+      $result = $link->query($sql2);
+      echo "<p class='success'>Se ha añadido al carrito el producto con id $product_id</p>";
+      //y lo añado al carrito
+      addCart($_POST['product_id']);
+    } else {
+      echo "<p class='error'>No hay stock suficiente</p>";
+    }
+  }
+
+
+}
+
 
 function addCart($product_id) {
   $_SESSION['stock']++;
@@ -134,7 +151,9 @@ if (isset($_SESSION['cart'][$product_id])) {
   $_SESSION['cart'][$product_id] = 1;
 
 }
+
 }
+
 
 
 

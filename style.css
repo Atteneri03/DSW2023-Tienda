@@ -1,0 +1,34 @@
+table, td, th {
+    border: 1px solid;
+  }
+  
+  th {
+    background-color: lightblue;
+  }
+  
+  table {
+    width: 70%;
+    border-collapse: collapse;
+  }
+  
+  .success{
+    background-color: lightgreen;
+  }
+
+  .error{
+    background-color: lightcoral;
+  }
+
+  #total {
+    background-color: lightcoral;
+  }
+
+  .td_buttons {
+    align-content: center;
+  } 
+
+  .button {
+    width: 27px;
+    height: 27px;
+  }
+
