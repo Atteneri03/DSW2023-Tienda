@@ -1,4 +1,4 @@
--- Active: 1699981791464@@127.0.0.1@3306@productsdb
+-- Active: 1700824904123@@127.0.0.1@3306@tienda
 DROP DATABASE productsdb;
 DROP DATABASE tienda;
 

@@ -157,9 +157,9 @@ if (isset($_SESSION['cart'][$product_id])) {
 
 
 
-if(isset($_SESSION["cart"])){
-print_r($_SESSION["cart"]);
-}
+// if(isset($_SESSION["cart"])){
+// print_r($_SESSION["cart"]);
+// }
 
 ?> 
      

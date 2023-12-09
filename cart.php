@@ -200,7 +200,9 @@ function subtract($product_id) {
         }
         
       
-        }
+        }else {
+            echo "<p class='error'>No hay stock suficiente</p>";
+            }
     }
 }
 
